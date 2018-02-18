@@ -1,0 +1,12 @@
+doctype html
+html
+	head
+		title= func
+		link(rel="stylesheet", href="/MathLib.min.css")
+		:css
+			body, html { margin: 0; padding: 0; }
+	body
+		#canvas
+		- import std.string;
+		script var functions = "!{func.replace(`"`, `\"`)}".split(";");
+		script(src="/math.js")

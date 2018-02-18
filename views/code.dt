@@ -1,0 +1,17 @@
+doctype html
+html
+	head
+		title Code
+		link(rel="stylesheet", href="//cdn.jsdelivr.net/highlight.js/8.6/styles/default.min.css")
+		script(src="/highlight.pack.js")
+		:css
+			body, html {
+				background-color: #F0F0F0;
+			}
+			code {
+				tab-size: 4;
+			}
+		script hljs.initHighlightingOnLoad();
+	body
+		pre><
+			code= content
