@@ -2,8 +2,9 @@ doctype html
 html
 	head
 		title Code
-		link(rel="stylesheet", href="//cdn.jsdelivr.net/highlight.js/8.6/styles/default.min.css")
-		script(src="/highlight.pack.js")
+		link(rel="stylesheet", href="/highlight.js/styles/default.css")
+		//- Additional Languages: Basic, D, F#, Lisp, Lua, Vim Script, YAML
+		script(src="/highlight.js/highlight.pack.js")
 		:css
 			body, html {
 				background-color: #F0F0F0;
