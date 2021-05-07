@@ -134,7 +134,6 @@ public:
 			if (toHexString(sha512Of(secret)) != SecretHash)
 			{
 				logInfo("Invalid Secret!");
-				res.writeBody("Not Found", 404);
 				return;
 			}
 		}
@@ -182,14 +181,12 @@ public:
 			if (toHexString(sha512Of(secret)) != SecretHash)
 			{
 				logInfo("Invalid Secret!");
-				res.writeBody("Not Found", 404);
 				return;
 			}
 		}
 		if (url == "")
 		{
 			logInfo("Missing Url!");
-			res.writeBody("Not Found", 404);
 			return;
 		}
 		string id = "r" ~ hash(getID());
@@ -217,7 +214,6 @@ public:
 			if (toHexString(sha512Of(secret)) != SecretHash)
 			{
 				logInfo("Invalid Secret! " ~ secret);
-				res.writeBody("Not Found", 404);
 				return;
 			}
 		}
@@ -225,7 +221,6 @@ public:
 		if (file is null)
 		{
 			logInfo("File not present");
-			res.writeBody("Not Found", 404);
 			return;
 		}
 		string id = "c" ~ hash(getID());
@@ -265,14 +260,12 @@ public:
 			if (toHexString(sha512Of(secret)) != SecretHash)
 			{
 				logInfo("Invalid Secret!");
-				res.writeBody("Not Found", 404);
 				return;
 			}
 		}
 		if (text == "")
 		{
 			logInfo("Missing text!");
-			res.writeBody("Not Found", 404);
 			return;
 		}
 		validate(text);
@@ -303,13 +296,11 @@ public:
 			if (toHexString(sha512Of(secret)) != SecretHash)
 			{
 				logInfo("Invalid Secret!");
-				res.writeBody("Not Found", 404);
 				return;
 			}
 			if (equation == "")
 			{
 				logInfo("Missing math functions!");
-				res.writeBody("Not Found", 404);
 				return;
 			}
 			string id = "m" ~ hash(getID());
@@ -332,7 +323,6 @@ public:
 		string id = req.path[1 .. $];
 		if (id.length < 6)
 		{
-			res.writeBody("Not Found", 404);
 			return;
 		}
 		Bson query = Bson(["id" : Bson(id[0 .. 6])]);
@@ -340,7 +330,6 @@ public:
 		auto bsonResult = collection.findOne(query);
 		if (bsonResult.type == Bson.Type.null_)
 		{
-			res.writeBody("Not Found", 404);
 			return;
 		}
 		result.fromBson(bsonResult);
@@ -381,7 +370,7 @@ void renderCode(HTTPServerResponse res, HTTPServerRequest req, string content)
 	import std.algorithm : canFind;
 
 	if (req.headers.get("Accept", "").canFind("text/html"))
-	res.render!("code.dt", content);
+		res.render!("code.dt", content);
 	else
 		res.writeBody(content, "text/plain");
 }
