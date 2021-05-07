@@ -359,11 +359,11 @@ public:
 				res.redirect(result.data);
 			else if (result.type == EntryType.Code)
 			{
-				res.renderCode(readText(result.data));
+				res.renderCode(req, readText(result.data));
 			}
 			else if (result.type == EntryType.Text)
 			{
-				res.renderCode(result.data);
+				res.renderCode(req, result.data);
 			}
 			else if (result.type == EntryType.Graph)
 			{
@@ -376,9 +376,14 @@ public:
 	}
 }
 
-void renderCode(HTTPServerResponse res, string content)
+void renderCode(HTTPServerResponse res, HTTPServerRequest req, string content)
 {
+	import std.algorithm : canFind;
+
+	if (req.headers.get("Accept", "").canFind("text/html"))
 	res.render!("code.dt", content);
+	else
+		res.writeBody(content, "text/plain");
 }
 
 shared static this()
